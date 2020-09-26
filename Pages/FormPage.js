@@ -37,16 +37,29 @@ class FormPage
     return buttonText == 'Form';
   }
 
+  async isFormVisible()
+  {
+    
+    return await (await this.driver.findElement(By.id('hello-form'))).isDisplayed();
+  }
+
+  async writeName(value)
+  {
+    await this.driver.findElement(By.id('hello-input')).sendKeys(value);
+  }
+
+  async submitForm(value)
+  {
+    await this.driver.findElement(By.id('hello-submit')).click();
+  }
+
+  // hello-text
+
+
   // async closeBrowser(){
   //    (await this.driver).close();
   // }
 
-  // async getSubTitle() {
-  //   var homeParagraph = await this.driver.findElement(By.css(".ui-test > p"));
-  //   var pageSubTitle = await homeParagraph.getAttribute("innerHTML");
-
-  //   return pageSubTitle;
-  // }
 }
 
 module.exports = new FormPage();
