@@ -1,5 +1,6 @@
-const { Builder, By, Key, util } = require('selenium-webdriver')
+const { Builder, By, Key, util, WebDriver, Capabilities } = require('selenium-webdriver')
 const { setDefaultTimeout } = require('@cucumber/cucumber');
+const { Options } = require('selenium-webdriver/chrome');
 setDefaultTimeout(60 * 1000);
 
 class HomePage
@@ -9,7 +10,12 @@ class HomePage
 
   constructor()
   {
-    this.driver =  new Builder().forBrowser('chrome').build();
+    var chrome_options = new Options();
+    chrome_options.addArguments("--disable-extensions")
+    //chrome_options.add_argument("--disable-gpu")
+    chrome_options.addArguments("--headless")
+
+    this.driver =  new Builder().forBrowser('chrome').setChromeOptions(chrome_options).build();
   }
 
   async gotoDocker()

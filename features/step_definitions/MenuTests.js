@@ -59,12 +59,12 @@ Then ('I should get a 404 HTTP response code', async function()
   assertThat(pageTitle, '404 Error: File not found :-(');
 })
 
-Then ('it should turn Home to active status', async function()
+Then ('it should turn Home button to active status', async function()
 {
   assertThat(await myHomePage.isHomeMenuActive(), true);
 })
 
-Then ('it should turn Form to active status', async function()
+Then ('it should turn Form button to active status', async function()
 {
   assertThat(await myFormPage.isFormMenuActive(), true);
 })

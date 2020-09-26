@@ -6,14 +6,14 @@ Feature: Menu validation
 		Given I am at Docler Menu
     When I click the Home button
 		Then I should get navigated to the Home page
-    And it should turn Home to active status
+    And it should turn Home button to active status
 
 	#Req-UI-05 / Req-UI-06
 	Scenario: Form menu button validation 
 		Given I am at Docler form
     When I click the Form menu button
 		Then I should get navigated to the Form page
-    And it should turn Form to active status
+    And it should turn Form button to active status
 
 
 	# Req-UI-08 
