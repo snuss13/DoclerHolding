@@ -2,7 +2,7 @@ const { Builder, By, Key, util } = require('selenium-webdriver')
 const { setDefaultTimeout } = require('@cucumber/cucumber');
 setDefaultTimeout(60 * 1000);
 
-class HomePage
+class FormPage
 {
 
   driver;
@@ -17,14 +17,10 @@ class HomePage
     await this.driver.get("http://uitest.duodecadits.com/");
   }
 
-  async browseHome()
+  async browseForm()
   {
-    await (await (await this.driver).findElement(By.id('home'))).click();
-  }
-
-  async clickOnUITest()
-  {
-    await (await (await this.driver).findElement(By.css('#site'))).click();
+    var button = await this.driver.findElement(By.id('form'));
+    button.click();
   }
 
   async getTitle() {
@@ -34,23 +30,23 @@ class HomePage
     return pageTitle;
   }
 
-  async isHomeMenuActive()
+  async isFormMenuActive()
   {
     var actriveButton = await (await this.driver).findElement(By.css('#navbar > ul > li.active'))
     var buttonText = await actriveButton.getText();
-    return buttonText == 'Home';
+    return buttonText == 'Form';
   }
 
-  async closeBrowser(){
-     (await this.driver).close();
-  }
+  // async closeBrowser(){
+  //    (await this.driver).close();
+  // }
 
-  async getSubTitle() {
-    var homeParagraph = await this.driver.findElement(By.css(".ui-test > p"));
-    var pageSubTitle = await homeParagraph.getAttribute("innerHTML");
+  // async getSubTitle() {
+  //   var homeParagraph = await this.driver.findElement(By.css(".ui-test > p"));
+  //   var pageSubTitle = await homeParagraph.getAttribute("innerHTML");
 
-    return pageSubTitle;
-  }
+  //   return pageSubTitle;
+  // }
 }
 
-module.exports = new HomePage();
+module.exports = new FormPage();
