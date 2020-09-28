@@ -5,13 +5,7 @@ const { Options } = require('selenium-webdriver/chrome');
 const FormPage = require('../../Pages/FormPage');
 const HelloPage = require('../../Pages/HelloPage');
 
-var chrome_options = new Options();
-    chrome_options.addArguments("--disable-extensions")
-    chrome_options.addArguments("--headless")
-
-var driver =  new Builder().forBrowser('chrome').setChromeOptions(chrome_options).build();
-
-myFormPage = new FormPage(driver);
+myFormPage = new FormPage();
 
 When ('I click the Form button', async function ()
 {
@@ -34,7 +28,7 @@ Then ('a form should be visible with one input box and one submit button', async
 
 Then ('you should get redirected to the Hello page, and the follwoing text should appear: {string}', async function(expectedResult)
 {
-  myHelloPage = new HelloPage(driver);
-  var resp1 = await myHelloPage.getHelloMessage();
-  assertThat(expectedResult, resp1);
+  myHelloPage = new HelloPage(myFormPage.driver);
+  var helloMsg = await myHelloPage.getHelloMessage();
+  assertThat(expectedResult, helloMsg);
 })

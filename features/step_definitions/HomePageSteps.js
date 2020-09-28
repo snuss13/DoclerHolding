@@ -4,12 +4,6 @@ const { Builder } = require('selenium-webdriver')
 const { Options } = require('selenium-webdriver/chrome');
 const HomePage = require('../../Pages/HomePage');
 
-// var chrome_options = new Options();
-//     chrome_options.addArguments("--disable-extensions")
-//     chrome_options.addArguments("--headless")
-
-// var driver =  new Builder().forBrowser('chrome').setChromeOptions(chrome_options).build();
-
 myHomePage = new HomePage();
 
 Given ('I am at Home page', async function ()

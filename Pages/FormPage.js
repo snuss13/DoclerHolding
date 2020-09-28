@@ -1,6 +1,7 @@
-const { By, until, Key } = require('selenium-webdriver')
+const { Builder, By, until, Key } = require('selenium-webdriver')
 const { setDefaultTimeout } = require('@cucumber/cucumber');
 setDefaultTimeout(60 * 1000);
+const { Options } = require('selenium-webdriver/chrome');
 
 class FormPage
 {
@@ -9,7 +10,20 @@ class FormPage
 
   constructor(driver)
   {
-    this.driver = driver;
+      if (driver == null)
+      {
+        var chrome_options = new Options();
+        chrome_options.addArguments("--disable-extensions")
+        chrome_options.addArguments("--headless")
+
+        var driver =  new Builder().forBrowser('chrome').setChromeOptions(chrome_options).build();
+
+        this.driver = driver;
+      }
+      else
+      {
+        this.driver = driver;
+      }
   }
 
   async gotoDocker()
