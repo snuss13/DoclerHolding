@@ -1,6 +1,5 @@
-const { Builder, By, Key, util } = require('selenium-webdriver')
+const { By, until, Key } = require('selenium-webdriver')
 const { setDefaultTimeout } = require('@cucumber/cucumber');
-const { Options } = require('selenium-webdriver/chrome');
 setDefaultTimeout(60 * 1000);
 
 class FormPage
@@ -8,14 +7,9 @@ class FormPage
 
   driver;
 
-  constructor()
+  constructor(driver)
   {
-    var chrome_options = new Options();
-    chrome_options.addArguments("--disable-extensions")
-    //chrome_options.add_argument("--disable-gpu")
-    chrome_options.addArguments("--headless")
-
-    this.driver =  new Builder().forBrowser('chrome').setChromeOptions(chrome_options).build();
+    this.driver = driver;
   }
 
   async gotoDocker()
@@ -30,10 +24,9 @@ class FormPage
   }
 
   async getTitle() {
-    var title = await this.driver.findElement(By.css(".ui-test > h1"));
-    var pageTitle = await title.getAttribute("innerHTML");
-  
-    return pageTitle;
+    await this.driver.wait(until.elementLocated(By.css(".ui-test > h1"), 5 * 1000));
+      
+    return await this.driver.findElement(By.css(".ui-test > h1")).getAttribute("innerHTML");
   }
 
   async isFormMenuActive()
@@ -45,13 +38,26 @@ class FormPage
 
   async isFormVisible()
   {
+    let form = await this.driver.wait(until.elementLocated(By.id('hello-form'), 5 * 1000));
+    return form.isDisplayed();
+  }
+  
+  async hasImputBox()
+  {
+    let form = await this.driver.wait(until.elementLocated(By.id('hello-input'), 5 * 1000));
+    return form.isDisplayed();
+  }
 
-    return await (await this.driver.findElement(By.id('hello-form'))).isDisplayed();
+  async hasSubmitBtn()
+  {
+    let form = await this.driver.wait(until.elementLocated(By.id('hello-submit'), 5 * 1000));
+    return form.isDisplayed();
   }
 
   async writeName(value)
   {
-    await this.driver.findElement(By.id('hello-input')).sendKeys(value);
+    let el = await this.driver.wait(until.elementLocated(By.id('hello-input'), 5 * 1000));
+    await el.sendKeys(value);
   }
 
   async submitForm(value)
@@ -59,13 +65,10 @@ class FormPage
     await this.driver.findElement(By.id('hello-submit')).click();
   }
 
-  // hello-text
-
-
   // async closeBrowser(){
   //    (await this.driver).close();
   // }
 
 }
 
-module.exports = new FormPage();
+module.exports = FormPage;

@@ -1,6 +1,5 @@
-const { Builder, By, Key, util } = require('selenium-webdriver')
+const { By } = require('selenium-webdriver')
 const { setDefaultTimeout } = require('@cucumber/cucumber');
-const { Options } = require('selenium-webdriver/chrome');
 setDefaultTimeout(60 * 1000);
 
 class ErrorPage
@@ -8,14 +7,9 @@ class ErrorPage
 
   driver;
 
-  constructor()
+  constructor(driver)
   {
-    var chrome_options = new Options();
-    chrome_options.addArguments("--disable-extensions")
-    //chrome_options.add_argument("--disable-gpu")
-    chrome_options.addArguments("--headless")
-
-    this.driver =  new Builder().forBrowser('chrome').setChromeOptions(chrome_options).build();
+    this.driver = driver;
   }
 
   async gotoDocker()
@@ -36,4 +30,4 @@ class ErrorPage
   }
 }
 
-module.exports = new ErrorPage();
+module.exports = ErrorPage;

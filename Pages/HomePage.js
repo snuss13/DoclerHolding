@@ -1,7 +1,7 @@
-const { Builder, By, Key, util, WebDriver, Capabilities } = require('selenium-webdriver')
+const { Builder, By } = require('selenium-webdriver')
 const { setDefaultTimeout } = require('@cucumber/cucumber');
-const { Options } = require('selenium-webdriver/chrome');
 setDefaultTimeout(60 * 1000);
+const { Options } = require('selenium-webdriver/chrome');
 
 class HomePage
 {
@@ -12,15 +12,16 @@ class HomePage
   {
     var chrome_options = new Options();
     chrome_options.addArguments("--disable-extensions")
-    //chrome_options.add_argument("--disable-gpu")
     chrome_options.addArguments("--headless")
 
-    this.driver =  new Builder().forBrowser('chrome').setChromeOptions(chrome_options).build();
+    var driver =  new Builder().forBrowser('chrome').setChromeOptions(chrome_options).build();
+
+    this.driver = driver;
   }
 
   async gotoDocker()
   {
-    await this.driver.get("http://uitest.duodecadits.com/");
+    return await this.driver.get("http://uitest.duodecadits.com/");
   }
 
   async browseHome()
@@ -47,10 +48,6 @@ class HomePage
     return buttonText == 'Home';
   }
 
-  async closeBrowser(){
-     (await this.driver).close();
-  }
-
   async getSubTitle() {
     var homeParagraph = await this.driver.findElement(By.css(".ui-test > p"));
     var pageSubTitle = await homeParagraph.getAttribute("innerHTML");
@@ -59,4 +56,4 @@ class HomePage
   }
 }
 
-module.exports = new HomePage();
+module.exports = HomePage;

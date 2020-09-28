@@ -1,23 +1,18 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
 const { assertThat } = require('hamjest');
-var myHomePage = require ('../../Pages/HomePage');
-var myFormPage = require ('../../Pages/FormPage');
-var myErrorPage = require ('../../Pages/ErrorPage');
 
+var HomePage = require ('../../Pages/HomePage');
+myHomePage = new HomePage ();
 
-Given ('I am at Docler Menu', async function ()
+var FormPage = require ('../../Pages/FormPage');
+myFormPage = new FormPage(myHomePage.driver);
+
+var ErrorPage = require ('../../Pages/ErrorPage');
+myErrorPage = new ErrorPage(myHomePage.driver);
+
+Given ('I am at Docler site', async function ()
 {
   await myHomePage.gotoDocker();
-})
-
-Given ('I am at Docler form', async function ()
-{
-  await myFormPage.gotoDocker();
-})
-
-Given ('I am at Docler', async function ()
-{
-  await myErrorPage.gotoDocker();
 })
 
 When ('I click the Home button', async function() 
@@ -69,10 +64,3 @@ Then ('it should turn Form button to active status', async function()
   assertThat(await myFormPage.isFormMenuActive(), true);
 })
 
-
-
-
-// Then ('', async function()
-// {
-  
-// })
